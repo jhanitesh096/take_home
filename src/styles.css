@@ -1,9 +1,15 @@
-:root{
-    --main-font:30px;
-    --primary-color:#074684;
-    --secondary-color:lightblue;
+:root {
+  --main-font: 30px;
+  --primary-color: #074684;
+  --secondary-color: lightblue;
+  --table-color: #074684;
+  --white: white;
 }
 
-#search-bar-0-label{
-    display: none;
+#search-bar-0-label {
+  display: none;
+}
+.table > thead {
+  background-color: var(--table-color);
+  color: var(--white);
 }

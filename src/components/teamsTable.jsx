@@ -117,6 +117,10 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
         backgroundColor: "lightgray",
       };
     }
+    return {
+      backgroundColor: "#F8FBFD",
+      borderColor:'white'
+    }
   };
 
   return (
@@ -130,7 +134,7 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
           search
         >
           {(props) => (
-            <div>
+            <div className={style.tableWrap}>
               <SearchBar {...props.searchProps} style={tableSearchStyle} />
               <BootstrapTable
                 {...props.baseProps}
