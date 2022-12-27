@@ -1,0 +1,45 @@
+.searchWrap {
+  width: 50%;
+}
+
+/* */
+.pages {
+  float: right;
+}
+
+.pegination {
+  float: right;
+}
+.pegination > button {
+  margin: 0px 2px;
+}
+
+.teamName {
+  padding: 0.7rem;
+  width: 400px;
+  background-color: var(--secondary-color);
+  font-weight: bold;
+}
+.drawer {
+  width: 400;
+}
+.teamDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.desc {
+  margin: 1.5rem 0rem;
+  padding: 0rem 2rem;
+}
+.desc > section {
+  margin: 0.8rem 0rem;
+}
+.gameDesc {
+  margin: 1.5rem 0rem;
+  padding: 0rem 2rem;
+}
+.gameDesc > section {
+  font-weight: bold;
+  padding: 0.6rem 0rem;
+}

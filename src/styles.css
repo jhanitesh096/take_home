@@ -1,0 +1,9 @@
+:root{
+    --main-font:30px;
+    --primary-color:#074684;
+    --secondary-color:lightblue;
+}
+
+#search-bar-0-label{
+    display: none;
+}

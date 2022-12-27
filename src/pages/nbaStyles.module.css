@@ -1,0 +1,4 @@
+.heading{
+    font-size: var(--main-font);
+    color: var( --primary-color);
+}
