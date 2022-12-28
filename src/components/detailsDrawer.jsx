@@ -14,7 +14,11 @@ export default function DetailsDrawer({ state, toggleDrawer, teamDetails }) {
           open={state}
           onClose={toggleDrawer}
         >
-          <div className={style.teamName}>{full_name}</div>
+          <section className={style.headingWraper}>
+            <div className={style.teamName}>{full_name}</div>
+            <span onClick={() => toggleDrawer()}>X</span>
+          </section>
+
           <section className={style.desc}>
             <section className={style.teamDetails}>
               <div>Team Full Name</div>

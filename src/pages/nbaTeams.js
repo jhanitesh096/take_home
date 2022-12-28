@@ -7,6 +7,7 @@ function NbaTeams() {
   const [state, setState] = useState(false);
   const [teams, setTeams] = useState([]);
   const [teamDetails, setTeamDetails] = useState(null);
+  
 
   const toggleDrawer = () => {
     setState((prev) => !prev);
