@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
-import { getAllTeams, getTeamById } from "../services/getAllTeams";
+import {
+  getAllTeams,
+  getGameDataByTeamId,
+  getTeamById,
+} from "../services/getAllTeams";
 import Button from "react-bootstrap/Button";
 import style from "./componentsStyle.module.css";
 import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
 import "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css";
+import NoDataFound from "../common/noDataFound";
+import { CircularProgress } from "@mui/material";
 
 const columns = [
   {
@@ -38,13 +44,21 @@ const tableSearchStyle = {
   margin: "1rem 0rem",
 };
 
-function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
+function TeamsTable({
+  toggleDrawer,
+  setTeamDetails,
+  teams,
+  setTeams,
+  rowId,
+  setRowId,
+}) {
   const [pageInfo, setPageInfo] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowId, setRowId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { SearchBar } = Search;
 
   const fetchTeam = async (page = 1, per_page = 10) => {
+    setLoading(true);
     const params = {
       page,
       per_page,
@@ -53,6 +67,9 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
     if (res?.status === 200) {
       setTeams(res?.data?.data);
       setPageInfo(res?.data?.meta);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   };
 
@@ -98,16 +115,20 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
       </>
     );
   };
-  const getTeamDetailsById = async (id) => {
-    const res = await getTeamById(id);
+  const getTeamDetailsById = async (season = 2021, id) => {
+    let payload = {
+      season,
+      teamId: id,
+    };
+    const res = await getGameDataByTeamId(payload);
     if (res.status === 200) {
-      setTeamDetails(res?.data);
+      setTeamDetails(res?.data?.data);
       toggleDrawer();
     }
   };
   const rowEvents = {
     onClick: (e, row) => {
-      getTeamDetailsById(row?.id);
+      getTeamDetailsById(2021, row?.id);
       setRowId(row?.id);
     },
   };
@@ -119,8 +140,8 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
     }
     return {
       backgroundColor: "#F8FBFD",
-      borderColor:'white'
-    }
+      borderColor: "white",
+    };
   };
 
   return (
@@ -142,12 +163,18 @@ function TeamsTable({ toggleDrawer, setTeamDetails, teams, setTeams }) {
                 hover
                 rowEvents={rowEvents}
                 rowStyle={rowStyle}
-                wrapperClasses="table-responsive"
+                wrapperClasses='table-responsive'
               />
             </div>
           )}
         </ToolkitProvider>
-      ) : null}
+      ) : loading ? (
+        <div className={style.progress}>
+          <CircularProgress size={50} />
+        </div>
+      ) : (
+        <NoDataFound msg='No Data Found!!!' />
+      )}
       {pageInfo?.total_pages > 0 ? (
         <div className={style.pegination}>{pageButtonRenderer()}</div>
       ) : null}

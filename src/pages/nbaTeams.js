@@ -7,6 +7,7 @@ function NbaTeams() {
   const [state, setState] = useState(false);
   const [teams, setTeams] = useState([]);
   const [teamDetails, setTeamDetails] = useState(null);
+  const [rowId, setRowId] = useState(null);
   
 
   const toggleDrawer = () => {
@@ -21,13 +22,15 @@ function NbaTeams() {
         setTeamDetails={setTeamDetails}
         teams={teams}
         setTeams={setTeams}
-        
+        rowId={rowId}
+        setRowId={setRowId}
       />
       {teamDetails ? (
         <DetailsDrawer
           state={state}
           toggleDrawer={toggleDrawer}
           teamDetails={teamDetails}
+          rowId={rowId}
         />
       ) : null}
     </div>
