@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Drawer from "@mui/material/Drawer";
 import style from "./componentsStyle.module.css";
 import { dateFormatter } from "../utils/dataFormatter";
@@ -6,21 +6,10 @@ import { dateFormatter } from "../utils/dataFormatter";
 export default function DetailsDrawer({
   state,
   toggleDrawer,
-  teamDetails,
-  rowId,
+  setRowId,
+  gameDetails
 }) {
-  const [gameDetails, setGameDetails] = useState(null);
 
-  useEffect(() => {
-    if (teamDetails && rowId) {
-      const gameDetailsPlayedByTeam = teamDetails?.find(
-        (game) => game?.home_team?.id === rowId
-      );
-      if (gameDetailsPlayedByTeam) {
-        setGameDetails(gameDetailsPlayedByTeam);
-      }
-    }
-  }, [rowId, teamDetails]);
 
   return (
     <React.Fragment>
@@ -35,7 +24,14 @@ export default function DetailsDrawer({
             <div className={style.teamName}>
               {gameDetails?.home_team?.full_name}
             </div>
-            <span onClick={() => toggleDrawer()}>X</span>
+            <span
+              onClick={() => {
+                toggleDrawer();
+                setRowId(null);
+              }}
+            >
+              X
+            </span>
           </section>
 
           <section className={style.desc}>

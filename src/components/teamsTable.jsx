@@ -28,14 +28,17 @@ const columns = [
   {
     dataField: "abbreviation",
     text: "Abbrivation",
+    sort: true,
   },
   {
     dataField: "conference",
     text: "Conference",
+    sort: true,
   },
   {
     dataField: "division",
     text: "Divison",
+    sort: true,
   },
 ];
 

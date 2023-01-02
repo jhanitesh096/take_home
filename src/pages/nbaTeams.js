@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DetailsDrawer from "../components/detailsDrawer";
 import TeamsTable from "../components/teamsTable";
 import styles from "./nbaStyles.module.css";
@@ -8,11 +8,23 @@ function NbaTeams() {
   const [teams, setTeams] = useState([]);
   const [teamDetails, setTeamDetails] = useState(null);
   const [rowId, setRowId] = useState(null);
-  
+  const [gameDetails, setGameDetails] = useState(null);
 
-  const toggleDrawer = () => {
+  const toggleDrawer = (e, obj) => {
+    if (obj === "backdropClick") return;
     setState((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (teamDetails && rowId) {
+      const gameDetailsPlayedByTeam = teamDetails?.find(
+        (game) => game?.home_team?.id === rowId
+      );
+      if (gameDetailsPlayedByTeam) {
+        setGameDetails(gameDetailsPlayedByTeam);
+      }
+    }
+  }, [rowId, teamDetails]);
 
   return (
     <div>
@@ -25,12 +37,12 @@ function NbaTeams() {
         rowId={rowId}
         setRowId={setRowId}
       />
-      {teamDetails ? (
+      {gameDetails ? (
         <DetailsDrawer
           state={state}
           toggleDrawer={toggleDrawer}
-          teamDetails={teamDetails}
-          rowId={rowId}
+          setRowId={setRowId}
+          gameDetails={gameDetails}
         />
       ) : null}
     </div>
